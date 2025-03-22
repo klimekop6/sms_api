@@ -1,15 +1,15 @@
-import uvicorn
-from fastapi import FastAPI, HTTPException, Depends, status
-from fastapi.security import OAuth2PasswordBearer
-from pydantic import BaseModel, Field
-
+import asyncio
 from ipaddress import IPv4Address
+
+import uvicorn
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 from pyairmore.request import AirmoreSession
 from pyairmore.services.messaging import (
-    MessagingService,
     MessageRequestGSMError,
+    MessagingService,
 )
-import asyncio
+from pydantic import BaseModel, Field
 
 from adb_android import AndroidDevice
 from config import API_KEY, DEVICE_IP
@@ -32,7 +32,7 @@ service = MessagingService(session)
 
 
 class Message(BaseModel):
-    number: str = Field(regex="^[1-9][0-9]{8}$")
+    number: str = Field(pattern=r"^[1-9][0-9]{8}$")
     text: str
 
 

@@ -1,6 +1,6 @@
-from ppadb.client import Client as AdbClient
-from typing import Any
 from time import sleep
+
+from ppadb.client import Client as AdbClient
 
 
 class AndroidDevice:
@@ -16,14 +16,12 @@ class AndroidDevice:
         self.device.shell(f"input swipe {unlock_swipe}")  # Swipe up to unlock
 
     def start_airmore(self) -> None:
-        self.device.shell(
-            f"monkey -p com.airmore -c android.intent.category.LAUNCHER 1"
-        )
+        self.device.shell("monkey -p com.airmore -c android.intent.category.LAUNCHER 1")
 
     def authorize_device(self, wait: float | None = None) -> None:
         if wait:
             sleep(wait)
-        self.device.shell(f"input tap 335 545")
+        self.device.shell("input tap 335 545")
 
 
 if __name__ == "__main__":
